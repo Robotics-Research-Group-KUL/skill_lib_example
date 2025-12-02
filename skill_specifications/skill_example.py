@@ -1,5 +1,23 @@
 #!/usr/bin/env python3
 
+#  Copyright (c) 2025 KU Leuven, Belgium
+#
+#  Author: Santiago Iregui
+#  email: <santiago.iregui@kuleuven.be>
+#
+#  GNU Lesser General Public License Usage
+#  Alternatively, this file may be used under the terms of the GNU Lesser
+#  General Public License version 3 as published by the Free Software
+#  Foundation and appearing in the file LICENSE.LGPLv3 included in the
+#  packaging of this file. Please review the following information to
+#  ensure the GNU Lesser General Public License version 3 requirements
+#  will be met: https://www.gnu.org/licenses/lgpl.html.
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+
 import rclpy
 import sys
 
@@ -10,7 +28,7 @@ from rclpy.node import Node
 # from betfsm.betfsm import TickingState,TICKING,Blackboard, Sequence, Message, TickingStateMachine
 from betfsm.betfsm import *
 from betfsm.betfsm_node import BeTFSMNode
-from betfsm.betfsm_etasl import load_task_list, eTaSL_StateMachine
+from betfsm.betfsm_crospi import load_task_list, eTaSL_StateMachine
 from betfsm.graphviz_visitor import GraphViz_Visitor
 from betfsm.logger import get_logger,set_logger
 from betfsm.betfsm_ros import *
@@ -173,7 +191,7 @@ def main(args=None):
 
     blackboard = {}
 
-    load_task_list("$[etasl_ros2_application_template]/skill_specifications/libraries/skill_lib_example/tasks/skill_example.json",blackboard)
+    load_task_list("$[crospi_application_template]/skill_specifications/libraries/skill_lib_example/tasks/skill_example.json",blackboard)
     
     sm = MyStateMachine()
 
