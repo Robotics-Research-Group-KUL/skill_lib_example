@@ -36,24 +36,21 @@ from betfsm import (
 from betfsm_crospi import load_task_list, CrospiTask
 from betfsm_ros import BeTFSMNode,ROSRunner
 
-class MyTree(Repeat):
+class MySequence(Sequence):
     def __init__(self):
-        sequence = Sequence("my_sequence", [
-            Message(None,msg="start of a new loop"),
-            CrospiTask("MovingHome","MovingHome"),
-            CrospiTask("MovingDown","MovingDown"),
-            CrospiTask("MovingUp","MovingUp"),
-            CrospiTask("MovingSpline","MovingSpline")
-        ])
-        super().__init__("my_tree",-1,sequence) # -1 for infinite loop, 1 for one time through the sequence, 2 for two times, etc.
+        super().__init__("my_sequence_sine_wave_last_joint", [
+            Message(None,msg="start of a new Sine wave"),
+            CrospiTask("SineWaveLastJoint","SineWaveLastJoint"),
+            Message(None,msg="Finish of Sine wave") ]
+        )
 
 
 def main(args=None):
     rclpy.init(args=args)    
-    my_node = BeTFSMNode.get_instance("skill_example")
+    my_node = BeTFSMNode.get_instance("my_sequence_sine_wave_last_joint")
     set_logger("default",my_node.get_logger())
     set_logger("crospi",my_node.get_logger())
-    get_logger().info("skill_example_2 started")
+    get_logger().info("my_sequence_sine_wave_last_joint started")
     blackboard = {}
 
     #Use the following to load the task list relative to a ROS2 package, e.g. crospi_application_template
@@ -63,7 +60,7 @@ def main(args=None):
     json_name = os.path.splitext(os.path.basename(__file__))[0] + ".json"
     load_task_list(json_name, blackboard)    
 
-    sm = MyTree()
+    sm = MySequence()
     runner = ROSRunner(my_node,sm,blackboard, frequency=100.0, publish_frequency=5.0, debug=False, display_active=False)
     try:
         runner.run()
