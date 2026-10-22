@@ -18,9 +18,9 @@
         {
             "name": "guarded_motion_down",
             "task_specification": {
-                "from-core_task_lib-version-0.1.0": true,
+                "from-force_control_task_lib-version-0.1.0": true,
                 "is-guarded_motion": true,
-                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/guarded_motion.etasl.lua",
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/guarded_motion.etasl.lua",
                 "parameters": {
                     "force_threshold": 0.5,
                     "torque_threshold": 0.05,
@@ -62,9 +62,9 @@
         {
             "name": "guarded_motion_to_contour",
             "task_specification": {
-                "from-core_task_lib-version-0.1.0": true,
+                "from-force_control_task_lib-version-0.1.0": true,
                 "is-guarded_motion": true,
-                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/guarded_motion.etasl.lua",
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/guarded_motion.etasl.lua",
                 "parameters": {
                     "force_threshold": 0.5,
                     "torque_threshold": 0.05,
