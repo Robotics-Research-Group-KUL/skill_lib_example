@@ -1,0 +1,195 @@
+{
+    "$schema": "../../../../task_specifications/tasks-schema.json",
+    "tasks": [
+        {
+            "name": "MovingHome",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_jointspace_trap": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
+                "parameters": {
+                    "maxacc": 0.2,
+                    "maxvel": 0.5,
+                    "target_joints": [-1.57, -1.5708, 1.5708, -1.5708, -1.5708, 0],
+                    "units": "radians"
+                }
+            }
+        },
+        {
+            "name": "aproach_table",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_jointspace_trap": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
+                "parameters": {
+                    "maxacc": 0.1,
+                    "maxvel": 0.1,
+                    "target_joints": [-1.57, -1.5708, 2.0944, -2.0944, -1.5708, 0],
+                    "units": "radians"
+                }
+            }
+        },
+        {
+            "name": "approach_table_cartesian",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_cartesianspace_relative": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
+                "parameters": {
+                    "delta_euler": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "delta_pos": [
+                        0.07,
+                        0.12,
+                        -0.33
+                    ],
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.005,
+                    "error_rot_th": 0.01,
+                    "maxacc": 0.2,
+                    "maxvel": 0.5,
+                    "task_frame": "tcp_frame",
+                    "wrt_frame": "world_frame"
+                }
+            }
+        },
+        {
+            "name": "guarded_motion_x",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-guarded_motion": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/guarded_motion.etasl.lua",
+                "parameters": {
+                    "force_threshold": 0.5,
+                    "torque_threshold": 0.05,
+                    "contact_forces": [-2.0, 0.0, 3.0],
+                    "force_monitor": 1.0,
+                    "axis": "x",
+                    "FT_sensor_frame": "FT_sensor_frame",
+                    "guarded_motion_frame": "world_frame",
+                    "K_F": [
+                        1500,
+                        1500,
+                        1500
+                    ],
+                    "K_T": [
+                        200,
+                        200,
+                        200
+                    ],
+                    "maxvel": 0.5,
+                    "task_frame": "tcp_frame",
+                    "tf_2_insframe": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "time_delay": 2.0,
+                    "tool_COG": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "tool_weight": 0
+                }
+            }
+        },
+        {
+            "name": "guarded_motion_y",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-guarded_motion": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/guarded_motion.etasl.lua",
+                "parameters": {
+                    "force_threshold": 0.5,
+                    "torque_threshold": 0.05,
+                    "contact_forces": [-2.0, -2.0, 3.0],
+                    "force_monitor": 1.0,
+                    "axis": "y",
+                    "FT_sensor_frame": "FT_sensor_frame",
+                    "guarded_motion_frame": "world_frame",
+                    "K_F": [
+                        1500,
+                        1500,
+                        1500
+                    ],
+                    "K_T": [
+                        200,
+                        200,
+                        200
+                    ],
+                    "maxvel": 0.5,
+                    "task_frame": "tcp_frame",
+                    "tf_2_insframe": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "time_delay": 2.0,
+                    "tool_COG": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "tool_weight": 0
+                }
+            }
+        },
+        {
+            "name": "guarded_motion_z",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-guarded_motion": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/guarded_motion.etasl.lua",
+                "parameters": {
+                    "force_threshold": 0.5,
+                    "torque_threshold": 0.05,
+                    "contact_forces": [0.0, 0.0, 3.0],
+                    "force_monitor": 1.0,
+                    "axis": "z",
+                    "FT_sensor_frame": "FT_sensor_frame",
+                    "guarded_motion_frame": "world_frame",
+                    "K_F": [
+                        1500,
+                        1500,
+                        1500
+                    ],
+                    "K_T": [
+                        200,
+                        200,
+                        200
+                    ],
+                    "maxvel": 0.5,
+                    "task_frame": "tcp_frame",
+                    "tf_2_insframe": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "time_delay": 2.0,
+                    "tool_COG": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "tool_weight": 0
+                }
+            }
+        }
+    ]
+}

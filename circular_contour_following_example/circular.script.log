@@ -1,0 +1,54 @@
+[INFO] [1792682046.738889531] [contour_following_example]: Contour following example started
+[INFO] [1792682046.739604825] [contour_following_example]: Creating new client for /crospi_node/get_state
+[INFO] [1792682046.746483445] [contour_following_example]: Creating new client for /crospi_node/change_state
+[INFO] [1792682046.747404136] [contour_following_example]: Creating new client for /crospi_node/readTaskParameters
+[INFO] [1792682046.749369275] [contour_following_example]: Creating new client for /crospi_node/readRobotSpecification
+[INFO] [1792682046.750151301] [contour_following_example]: Creating new client for /crospi_node/readTaskSpecificationFile
+[INFO] [1792682046.751415532] [contour_following_example]: TopicEventReceiver attached to crospi_node/events
+[INFO] [1792682046.752924142] [contour_following_example]: Runner parameters:
+	frequency = 100.0
+	publish-frequency = 5.0
+	debug = False
+	display-active = False
+	betfsm-log = None
+	branding = True
+	serve = True
+	host = 0.0.0.0
+	port = 8000
+	workers = 1
+	log-level = info
+[INFO] [1792682046.753347750] [contour_following_example]: Running with KULeuven/RAM branding
+INFO:     Started server process [267793]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[INFO] [1792682047.768417484] [contour_following_example]: start of contour following
+[INFO] [1792682047.769410286] [contour_following_example]: crospiTask MovingHome has started
+[INFO] [1792682047.777430564] [contour_following_example]: Set parameters for cROSpi task MovingHome: {"maxacc": 0.2, "maxvel": 0.5, "target_joints": [-1.57, -1.5708, 2.0944, -2.0944, -1.5708, 0], "units": "radians"}
+[INFO] [1792682047.786822088] [contour_following_example]: robot specification file 
+[INFO] [1792682047.796719653] [contour_following_example]: task specification file $[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua
+[INFO] [1792682053.177710269] [contour_following_example]: crospiTask MovingHome has finished, crospi is deactivated
+[INFO] [1792682053.178894654] [contour_following_example]: crospiTask guarded_motion_down has started
+[INFO] [1792682053.185904405] [contour_following_example]: Set parameters for cROSpi task guarded_motion_down: {"force_threshold": 0.5, "torque_threshold": 0.05, "contact_forces": [0.0, 0.0, 3.0], "force_monitor": 1.0, "axis": "z", "FT_sensor_frame": "FT_sensor_frame", "guarded_motion_frame": "world_frame", "K_F": [1500, 1500, 1500], "K_T": [200, 200, 200], "maxvel": 0.5, "task_frame": "tcp_frame", "tf_2_insframe": [0, 0, 0, 0, 0, 0, 1], "time_delay": 2.0, "tool_COG": [0, 0, 0], "tool_weight": 0}
+[INFO] [1792682053.196804871] [contour_following_example]: robot specification file 
+[INFO] [1792682053.207052578] [contour_following_example]: task specification file $[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/guarded_motion.etasl.lua
+[INFO] [1792682065.536819589] [contour_following_example]: crospiTask guarded_motion_down has finished, crospi is deactivated
+[INFO] [1792682065.537789340] [contour_following_example]: crospiTask move_up has started
+[INFO] [1792682065.546914696] [contour_following_example]: Set parameters for cROSpi task move_up: {"delta_euler": [0, 0, 0], "delta_pos": [0, 0, 0.03], "eq_r": 0.08, "error_pos_th": 0.001, "error_rot_th": 0.01, "maxacc": 0.1, "maxvel": 0.1, "task_frame": "tcp_frame", "wrt_frame": "world_frame"}
+[INFO] [1792682065.556158831] [contour_following_example]: robot specification file 
+[INFO] [1792682065.566156739] [contour_following_example]: task specification file $[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua
+[INFO] [1792682066.745990668] [contour_following_example]: crospiTask move_up has finished, crospi is deactivated
+[INFO] [1792682066.746560574] [contour_following_example]: crospiTask guarded_motion_to_contour has started
+[INFO] [1792682066.757110336] [contour_following_example]: Set parameters for cROSpi task guarded_motion_to_contour: {"force_threshold": 0.5, "torque_threshold": 0.05, "contact_forces": [-5.0, 0.0, 0.0], "force_monitor": 1.0, "axis": "x", "FT_sensor_frame": "FT_sensor_frame", "guarded_motion_frame": "world_frame", "K_F": [1500, 1500, 1500], "K_T": [200, 200, 200], "maxvel": 0.5, "task_frame": "tcp_frame", "tf_2_insframe": [0, 0, 0, 0, 0, 0, 1], "time_delay": 2.0, "tool_COG": [0, 0, 0], "tool_weight": 0}
+[INFO] [1792682066.765971257] [contour_following_example]: robot specification file 
+[INFO] [1792682066.775798291] [contour_following_example]: task specification file $[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/guarded_motion.etasl.lua
+[INFO] [1792682079.516848733] [contour_following_example]: crospiTask guarded_motion_to_contour has finished, crospi is deactivated
+[INFO] [1792682079.517461809] [contour_following_example]: crospiTask contour_following has started
+[INFO] [1792682079.526917342] [contour_following_example]: Set parameters for cROSpi task contour_following: {"task_frame": "tcp_frame", "FT_sensor_frame": "FT_sensor_frame", "tf_2_contact_frame": [0, 0, 0, 0, 0, 0, 1], "wrench_convention": "exerted_on_environment", "normal_force": 10.0, "tangential_velocity": 0.03, "ramp_up_time": 3.0, "path_length": 1.0, "contact_stiffness": 5000.0, "K_force": 8.0, "K_tracking": 1.0, "K_hold": 4.0, "tool_COG": [0, 0, 0], "tool_weight": 0, "filter_cutoff_frequency": 5.0, "filter_order": 2}
+[INFO] [1792682079.536418378] [contour_following_example]: robot specification file 
+[INFO] [1792682079.546867374] [contour_following_example]: task specification file $[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/2D_contour_following.etasl.lua
+[INFO] [1792682116.656432910] [contour_following_example]: crospiTask contour_following has finished, crospi is deactivated
+[INFO] [1792682116.656971329] [contour_following_example]: contour following finished
+[INFO] [1792682116.657555381] [contour_following_example]: Runner finished with outcome SUCCEED
+[INFO] [1792682116.657975893] [contour_following_example]: Global timer stat. : N= 6871 mean =   0.000028, std =   0.002315, min =  -0.002263, max =   0.191512
+shutdown
