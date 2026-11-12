@@ -74,9 +74,9 @@
         {
             "name": "MovingAdmittance",
             "task_specification":{
-                "from-core_task_lib-version-0.1.0": true,
+                "from-force_control_task_lib-version-0.1.0": true,
                 "is-move_admittance": true,
-                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_admittance.etasl.lua",
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/move_admittance.etasl.lua",
                 "parameters": {
                     "activate_angular": false,
                     "activate_linear": false,

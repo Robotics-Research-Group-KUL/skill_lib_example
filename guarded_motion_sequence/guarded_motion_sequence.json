@@ -16,7 +16,7 @@
             }
         },
         {
-            "name": "aproach_table",
+            "name": "approach_table",
             "task_specification": {
                 "from-core_task_lib-version-0.1.0": true,
                 "is-move_jointspace_trap": true,
