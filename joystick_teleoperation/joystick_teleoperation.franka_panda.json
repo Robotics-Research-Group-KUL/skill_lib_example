@@ -1,0 +1,43 @@
+{
+    "$schema": "../../../../task_specifications/tasks-schema.json",
+    "tasks": [
+        {
+            "name": "MovingHome",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_jointspace_trap": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
+                "parameters": {
+                    "maxacc": 0.2,
+                    "maxvel": 0.5,
+                    "target_joints": [
+                        0.0,
+                        -0.785,
+                        0.0,
+                        -2.356,
+                        0.0,
+                        1.571,
+                        0.785
+                    ],
+                    "units": "radians"
+                }
+            }
+        },
+        {
+            "name": "joystick",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_joystick": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_joystick.etasl.lua",
+                "parameters": {
+                    "linear_scale": 0.1,
+                    "angular_scale": 0.5,
+                    "task_frame": "tcp_frame",
+                    "activate_linear": true,
+                    "activate_angular": true,
+                    "execution_time": 0
+                }
+            }
+        }
+    ]
+}
