@@ -1,27 +1,30 @@
 """
-BeTFSM states for a parallel gripper driven over ROS 2 topics (not by eTaSL):
+BeTFSM states for the simulated parallel gripper of the Crospi Playground ("gripper" of the MuJoCo simulator in the
+setup), over the ROS 2 topics of the simulator (an interface of the playground, not of a real gripper):
 
     command: std_msgs/Float64MultiArray  data = [opening [m], force [N] (optional)]     (default /gripper/command)
     state:   sensor_msgs/JointState      the finger joints (position, velocity, effort)  (default /gripper/joint_states)
 
-The opening is the sum of the positions of the finger joints (0: closed). In the Crospi Playground the gripper of the
-simulator ("gripper" of the MuJoCo simulator in the setup) has this interface; with crospi, a driver of a real gripper
-(or of another simulator) with these topics can be used.
+The opening is the sum of the positions of the finger joints (0: closed).
+
+Only for the simulation: real grippers have their own drivers and interfaces (usually ROS 2 actions, e.g.
+control_msgs/action/GripperCommand), for which states have to be written for the specific gripper.
 
     Sequence("grasp", [
         GripperOpen("open"),
         ...
-        GripperClose("close", force=20.0),     # SUCCEED: an object is held; NO_OBJECT: the fingers closed completely
+        GripperClose("close", force=20.0),     # SUCCEED: an object is held; CANCEL: the fingers closed completely
     ])
+
+Outcomes: SUCCEED; CANCEL (GripperClose: nothing between the fingers); TIMEOUT (the gripper did not stop in time).
 """
 import time
 
-from betfsm import CANCEL, SUCCEED, TICKING, Generator, get_logger
+from betfsm import CANCEL, SUCCEED, TICKING, TIMEOUT, Generator, get_logger
 from betfsm_ros import BeTFSMNode
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64MultiArray
 
-NO_OBJECT = "NO_OBJECT"
 COMMAND_TOPIC = "/gripper/command"
 STATE_TOPIC = "/gripper/joint_states"
 
@@ -58,13 +61,13 @@ def _publisher(topic):
 class GripperMove(Generator):
     """
     Moves the fingers to an opening [m] (clamped by the gripper to its range) with a maximal force [N] per finger
-    (0: the default of the gripper) and waits until they stop: SUCCEED, or CANCEL after `timeout` seconds. The final
+    (0: the default of the gripper) and waits until they stop: SUCCEED, or TIMEOUT after `timeout` seconds. The final
     opening is written into the blackboard: blackboard["gripper"]["opening"].
 
     opening and force can be callables f(blackboard).
     """
 
-    def __init__(self, name, opening, force=0.0, timeout=5.0, settle=0.2, outcomes=(SUCCEED, CANCEL),
+    def __init__(self, name, opening, force=0.0, timeout=5.0, settle=0.2, outcomes=(SUCCEED, TIMEOUT),
                  command_topic=COMMAND_TOPIC, state_topic=STATE_TOPIC):
         super().__init__(name, list(outcomes))
         self.opening, self.force = opening, force
@@ -101,7 +104,7 @@ class GripperMove(Generator):
             if now - start > self.timeout:
                 get_logger().warning(f"{self.name}: the gripper did not stop within {self.timeout} s"
                                      f"{'' if msg is not None else f' (no state on {self.state_topic})'}")
-                yield CANCEL
+                yield TIMEOUT
                 return
             yield TICKING
 
@@ -116,12 +119,12 @@ class GripperOpen(GripperMove):
 class GripperClose(GripperMove):
     """
     Closes the gripper with a maximal force [N] per finger: SUCCEED when the fingers stop on an object (opening larger
-    than `min_opening` [m]), NO_OBJECT when they close (nothing between them), CANCEL after the timeout.
+    than `min_opening` [m]), CANCEL when they close (nothing between them), TIMEOUT after the timeout.
     """
 
     def __init__(self, name, force=0.0, min_opening=0.003, **kw):
-        super().__init__(name, 0.0, force, outcomes=(SUCCEED, NO_OBJECT, CANCEL), **kw)
+        super().__init__(name, 0.0, force, outcomes=(SUCCEED, CANCEL, TIMEOUT), **kw)
         self.min_opening = min_opening
 
     def result(self, opening, target):
-        return SUCCEED if opening > self.min_opening else NO_OBJECT
+        return SUCCEED if opening > self.min_opening else CANCEL

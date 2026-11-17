@@ -4,33 +4,38 @@
 # pick_and_place.widowx_ai.json), environment pick_and_place/table_with_small_box.xml: the robot stands on a pedestal
 # next to the table and moves a cube (5 cm, 0.15 kg, a free body of the simulation) to another place of the table.
 #
-#   pick:  above the cube (home pose), open the gripper, guarded motion down until the fingertips touch the table (the
-#          height of the table is not assumed), up a little, close the gripper (SUCCEED: the cube is held; NO_OBJECT:
-#          the fingers closed completely), lift;
-#   place: above the target, guarded motion down until the cube touches the table (the force monitor of this guarded
-#          motion, 2 N, is above the weight of the cube held by the gripper, about 1 N after the dead zone), open
+#   pick:  home pose, open the gripper, fast motion (move_cartesianspace_absolute_pose, AboveCube of the task list) until
+#          the fingertips are 2 cm above the table, guarded motion down until they touch it (the exact height of the
+#          table is not assumed), up a little, close the gripper (SUCCEED: the cube is held; CANCEL:
+#          the fingers closed completely: a red label "no cube", the gripper opens, the robot moves home and the skill
+#          ends with NO_OBJECT), lift;
+#   place: fast motion above the target until the cube is 2 cm above the table (AboveTarget), tare of the F/T sensor
+#          (the weight of the held cube becomes its offset), guarded motion down until the cube touches the table, open
 #          the gripper, retreat, home.
 #
-# The gripper is not controlled by eTaSL: the BeTFSM states of gripper_states.py command it over ROS 2 topics (in the
-# Crospi Playground: the gripper of the simulator, "gripper" of the setup). The motions are relative to the home pose
-# (tool pointing down above the cube): move_cartesianspace_relative with the displacement computed from the plan in the
-# blackboard. Positions are in the robot base frame (the robot faces the table: its x axis points along -y of the world).
+# The gripper is not controlled by eTaSL: the BeTFSM states of fake_gripper_control.py command the simulated gripper of
+# the Crospi Playground ("gripper" of the setup) over ROS 2 topics of the simulator. Only for the simulation: for a real
+# gripper, states for its driver replace them. Positions are in the robot base frame (the robot faces the table: its x
+# axis points along -y of the world). The poses of AboveCube and AboveTarget (tcp_frame, tool pointing down) are in the
+# task list of the robot: they depend on its tcp_frame (Panda: 12 mm above the fingertips; WidowX AI: at the fingertips)
+# and match CUBE, TARGET and TABLE_Z below; the small motions (up, lift, retreat) are move_cartesianspace_relative.
 
 import os
 import sys
 
 import rclpy
-from betfsm import Compute, Message, Sequence, get_logger, set_logger
+from betfsm import AlwaysOutcome, Compute, Fallback, Message, Sequence, get_logger, set_logger
 from betfsm_crospi import CrospiTask, load_task_list
-from betfsm_ros import BeTFSMNode, ROSRunner
+from betfsm_ros import BeTFSMNode, ROSRunner, ServiceClient
+from std_srvs.srv import Trigger
 
 from crospi_playground import playground_markers as mk
 from crospi_playground.betfsm_markers import MarkerEdit
-from gripper_states import GripperClose, GripperOpen
+from fake_gripper_control import GripperClose, GripperOpen
 
-CUBE = [0.40, 0.0]        # cube on the table (robot base frame) [m]: below the tool at the home pose
-TARGET = [0.35, 0.15]     # where it is placed [m]
-TABLE_Z = -0.05           # table top (robot base frame) [m]: only for the markers (the motions find it)
+CUBE = [0.40, 0.0]        # cube on the table (robot base frame) [m] (AboveCube of the task list)
+TARGET = [0.35, 0.15]     # where it is placed [m] (AboveTarget of the task list)
+TABLE_Z = -0.05           # table top (robot base frame) [m]: for the markers (the guarded motions find it)
 GRASP_HEIGHT = 0.015      # the fingertips touch the table, then the gripper moves up by this before closing [m]
 LIFT = 0.10               # lift of the cube [m]
 GRASP_FORCE = 20.0        # per finger [N]
@@ -57,17 +62,34 @@ class PickAndPlace(Sequence):
                                      '"color":"#ffffff","opacity":1}', text="moving home"),
             GripperOpen("open gripper"),
             CrospiTask("MovingHome", "MovingHome"),
+            ServiceClient("tare F/T sensor", "/mujoco_robotsimulator/tare_ft_sensor", Trigger, []),  # tare of the F/T sensor before force control
             # ---- pick
+            label("pick: above the cube"),
+            CrospiTask("above the cube", "AboveCube"),
             label("pick: finding the table (guarded motion)"),
             CrospiTask("guarded down to the table", "GuardedDownPick"),
             CrospiTask("up to the grasp height", "MoveRelative", cb=relative(dz=GRASP_HEIGHT)),
             label("pick: closing the gripper"),
-            GripperClose("close gripper", force=GRASP_FORCE),
+            # CANCEL of GripperClose (the fingers closed completely, nothing between them) is a failure of the Fallback: it
+            # continues with "no cube", which reports it, opens the gripper and moves home; its outcome NO_OBJECT is not a
+            # failure: the Fallback, and so the skill, ends with NO_OBJECT. TIMEOUT (the gripper did not stop) is not a
+            # failure either: returned as is (no "no cube" label)
+            Fallback("grasp", [
+                GripperClose("close gripper", force=GRASP_FORCE),
+                Sequence("no cube", [
+                    label("no cube between the fingers", "#e15759"),
+                    Message(None, msg="pick_and_place: no cube between the fingers"),
+                    GripperOpen("open gripper (no cube)"),
+                    CrospiTask("MovingHome (no cube)", "MovingHome"),
+                    AlwaysOutcome("no cube", "NO_OBJECT"),
+                ]),
+            ]),
             label("pick: lifting the cube"),
             CrospiTask("lift", "MoveRelative", cb=relative(dz=LIFT)),
             # ---- place
             label("place: moving to the target"),
-            CrospiTask("to the target", "MoveRelative", cb=relative(dx=TARGET[0] - CUBE[0], dy=TARGET[1] - CUBE[1])),
+            CrospiTask("above the target", "AboveTarget"),
+            ServiceClient("tare F/T sensor (cube held)", "/mujoco_robotsimulator/tare_ft_sensor", Trigger, []),  # tare of the weight of the cube before the guarded motion
             label("place: lowering until the cube touches the table (guarded motion)"),
             CrospiTask("guarded down with the cube", "GuardedDownPlace"),
             GripperOpen("release"),

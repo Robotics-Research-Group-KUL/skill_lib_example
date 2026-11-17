@@ -41,13 +41,15 @@ from betfsm import (
     Sequence, Message, get_logger, set_logger
 )
 from betfsm_crospi import load_task_list, CrospiTask
-from betfsm_ros import BeTFSMNode, ROSRunner
+from betfsm_ros import BeTFSMNode, ROSRunner, ServiceClient
+from std_srvs.srv import Trigger
 
 class MyTree(Sequence):
     def __init__(self):
         super().__init__("contour_following_sequence", [
             Message(None, msg="start of contour following"),
             CrospiTask("MovingHome", "MovingHome"),
+            ServiceClient("tare F/T sensor", "/mujoco_robotsimulator/tare_ft_sensor", Trigger, []),  # tare of the F/T sensor before force control
             CrospiTask("guarded_motion_down", "guarded_motion_down"),
             CrospiTask("move_up", "move_up"),
             CrospiTask("guarded_motion_to_contour", "guarded_motion_to_contour"),

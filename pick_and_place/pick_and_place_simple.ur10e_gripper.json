@@ -1,0 +1,87 @@
+{
+    "$schema": "../../../../task_specifications/tasks-schema.json",
+    "tasks": [
+        {
+            "name": "MovingHome",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_jointspace_trap": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
+                "parameters": {
+                    "maxacc": 0.3,
+                    "maxvel": 0.3,
+                    "target_joints": [-0.4505, -1.8407, 2.6274, -2.3575, -1.5708, -0.4505],
+                    "units": "radians"
+                }
+            }
+        },
+        {
+            "name": "MoveRelative",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_cartesianspace_relative": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
+                "parameters": {
+                    "delta_pos": [0, 0, 0],
+                    "delta_euler": [0, 0, 0],
+                    "eq_r": 0.08,
+                    "maxacc": 0.2,
+                    "maxvel": 0.1,
+                    "task_frame": "tcp_frame",
+                    "wrt_frame": "world_frame"
+                }
+            }
+        },
+        {
+            "name": "GraspPose",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_cartesianspace_absolute_pose": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_absolute_pose.etasl.lua",
+                "parameters": {
+                    "desired_pose": [0.4, 0.0, -0.035, -0.70711, 0.70711, 0, 0],
+                    "maxvel": 0.25,
+                    "maxacc": 0.5,
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.001,
+                    "error_rot_th": 0.01,
+                    "task_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "AboveTarget",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_cartesianspace_absolute_pose": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_absolute_pose.etasl.lua",
+                "parameters": {
+                    "desired_pose": [0.35, 0.15, 0.065, -0.70711, 0.70711, 0, 0],
+                    "maxvel": 0.25,
+                    "maxacc": 0.5,
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.001,
+                    "error_rot_th": 0.01,
+                    "task_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "PlacePose",
+            "task_specification": {
+                "from-core_task_lib-version-0.1.0": true,
+                "is-move_cartesianspace_absolute_pose": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_absolute_pose.etasl.lua",
+                "parameters": {
+                    "desired_pose": [0.35, 0.15, -0.033, -0.70711, 0.70711, 0, 0],
+                    "maxvel": 0.25,
+                    "maxacc": 0.5,
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.001,
+                    "error_rot_th": 0.01,
+                    "task_frame": "tcp_frame"
+                }
+            }
+        }
+    ]
+}

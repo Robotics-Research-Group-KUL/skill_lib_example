@@ -23,7 +23,8 @@ from betfsm import (
     LogBlackboard, Message, Sequence, While, get_logger, set_logger,
 )
 from betfsm_crospi import CrospiTask, load_task_list
-from betfsm_ros import BeTFSMNode, ROSRunner
+from betfsm_ros import BeTFSMNode, ROSRunner, ServiceClient
+from std_srvs.srv import Trigger
 from crospi_interfaces.msg import Output
 
 from crospi_playground import playground_markers as mk
@@ -116,6 +117,7 @@ class MarkersCorner(Sequence):
             MarkerEdit("ground truth", json='{"is-frame":true,"name":"corner (ground truth)","reference":"corner",'
                                             '"position":[0.15,0.15,0],"size":0.05,"opacity":1}'),
             CrospiTask("MovingHome", "MovingHome"),
+            ServiceClient("tare F/T sensor", "/mujoco_robotsimulator/tare_ft_sensor", Trigger, []),  # tare of the F/T sensor before force control
             CrospiTask("approach_table_cartesian", "approach_table_cartesian"),
             # the table must be found (else: home, CANCEL); the walls are optional (CANCEL → SUCCEED)
             Fallback("find the table", [guarded("z", 15.0), no_table]),

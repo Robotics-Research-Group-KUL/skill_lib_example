@@ -34,13 +34,15 @@ from betfsm import (
     Sequence, Repeat,  Message, SUCCEED, TICKING, CANCEL, ABORT, get_logger,set_logger
 )
 from betfsm_crospi import load_task_list, CrospiTask
-from betfsm_ros import BeTFSMNode,ROSRunner
+from betfsm_ros import BeTFSMNode,ROSRunner,ServiceClient
+from std_srvs.srv import Trigger
 
 class MyTree(Repeat):
     def __init__(self):
         sequence = Sequence("my_sequence", [
             Message(None,msg="start of a new loop"),
             CrospiTask("MovingHome","MovingHome"),
+            ServiceClient("tare F/T sensor", "/mujoco_robotsimulator/tare_ft_sensor", Trigger, []),  # tare of the F/T sensor before force control
             CrospiTask("approach_table_cartesian","approach_table_cartesian"),
             CrospiTask("guarded_motion_z","guarded_motion_z"),
             CrospiTask("guarded_motion_x","guarded_motion_x"),
