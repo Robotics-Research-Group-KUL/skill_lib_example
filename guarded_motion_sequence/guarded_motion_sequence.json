@@ -4,7 +4,7 @@
         {
             "name": "MovingHome",
             "task_specification": {
-                "from-core_task_lib-version-0.1.0": true,
+                "from-core_task_lib-version-1.0.1": true,
                 "is-move_jointspace_trap": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
                 "parameters": {
@@ -18,7 +18,7 @@
         {
             "name": "approach_table",
             "task_specification": {
-                "from-core_task_lib-version-0.1.0": true,
+                "from-core_task_lib-version-1.0.1": true,
                 "is-move_jointspace_trap": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
                 "parameters": {
@@ -32,7 +32,7 @@
         {
             "name": "approach_table_cartesian",
             "task_specification": {
-                "from-core_task_lib-version-0.1.0": true,
+                "from-core_task_lib-version-1.0.1": true,
                 "is-move_cartesianspace_relative": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
                 "parameters": {
@@ -59,7 +59,7 @@
         {
             "name": "guarded_motion_x",
             "task_specification": {
-                "from-force_control_task_lib-version-0.1.0": true,
+                "from-force_control_task_lib-version-1.0.1": true,
                 "is-guarded_motion": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/guarded_motion.etasl.lua",
                 "parameters": {
@@ -104,7 +104,7 @@
         {
             "name": "guarded_motion_y",
             "task_specification": {
-                "from-force_control_task_lib-version-0.1.0": true,
+                "from-force_control_task_lib-version-1.0.1": true,
                 "is-guarded_motion": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/guarded_motion.etasl.lua",
                 "parameters": {
@@ -149,7 +149,7 @@
         {
             "name": "guarded_motion_z",
             "task_specification": {
-                "from-force_control_task_lib-version-0.1.0": true,
+                "from-force_control_task_lib-version-1.0.1": true,
                 "is-guarded_motion": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/guarded_motion.etasl.lua",
                 "parameters": {
