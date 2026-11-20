@@ -1,0 +1,278 @@
+{
+    "$schema": "../../../../task_specifications/tasks-schema.json",
+    "tasks": [
+        {
+            "name": "MovingHome",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_jointspace_trap": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
+                "parameters": {
+                    "maxacc": 0.3,
+                    "maxvel": 0.3,
+                    "target_joints": [
+                        0.0,
+                        0.0654,
+                        0.0,
+                        -2.7266,
+                        0.0,
+                        2.7921,
+                        0.7854
+                    ],
+                    "units": "radians"
+                }
+            }
+        },
+        {
+            "name": "DrawerPregrasp",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_absolute_pose": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_absolute_pose.etasl.lua",
+                "parameters": {
+                    "desired_pose": [
+                        0.714,
+                        0.305,
+                        0.331,
+                        0.96593,
+                        0.0,
+                        0.25882,
+                        0.0
+                    ],
+                    "maxvel": 0.25,
+                    "maxacc": 0.5,
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.001,
+                    "error_rot_th": 0.01,
+                    "task_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "DoorPregrasp",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_absolute_pose": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_absolute_pose.etasl.lua",
+                "parameters": {
+                    "desired_pose": [
+                        0.698,
+                        0.19,
+                        0.5326,
+                        0.96593,
+                        0.0,
+                        0.25882,
+                        0.0
+                    ],
+                    "maxvel": 0.25,
+                    "maxacc": 0.5,
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.001,
+                    "error_rot_th": 0.01,
+                    "task_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "ApproachHandle",
+            "task_specification": {
+                "from-force_control_task_lib-version-1.0.3": true,
+                "is-move_compliant_along_axis": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/move_compliant_along_axis.etasl.lua",
+                "parameters": {
+                    "axis": "z",
+                    "force": 12.0,
+                    "distance": 0.15,
+                    "contact_force": 3.0,
+                    "time_delay": 1.0,
+                    "max_time": 15.0,
+                    "maxvel": 0.05,
+                    "max_angular_velocity": 0.5,
+                    "K_F": [
+                        5000,
+                        5000,
+                        5000
+                    ],
+                    "K_T": [
+                        25,
+                        25,
+                        25
+                    ],
+                    "K_force": 4,
+                    "K_torque": 4,
+                    "force_threshold": 0.5,
+                    "torque_threshold": 0.05,
+                    "task_frame": "tcp_frame",
+                    "FT_sensor_frame": "FT_sensor_frame",
+                    "tf_2_insframe": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "name": "BackOff",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_relative": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
+                "parameters": {
+                    "delta_pos": [
+                        0,
+                        0,
+                        -0.012
+                    ],
+                    "delta_euler": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "eq_r": 0.08,
+                    "maxacc": 0.1,
+                    "maxvel": 0.02,
+                    "task_frame": "tcp_frame",
+                    "wrt_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "PullDrawer",
+            "task_specification": {
+                "from-force_control_task_lib-version-1.0.3": true,
+                "is-move_compliant_along_axis": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/move_compliant_along_axis.etasl.lua",
+                "parameters": {
+                    "axis": "z",
+                    "force": -12.0,
+                    "distance": 0.15,
+                    "contact_force": 0.0,
+                    "time_delay": 0.0,
+                    "max_time": 40.0,
+                    "maxvel": 0.08,
+                    "max_angular_velocity": 0.5,
+                    "K_F": [
+                        5000,
+                        5000,
+                        5000
+                    ],
+                    "K_T": [
+                        50,
+                        50,
+                        50
+                    ],
+                    "K_force": 4,
+                    "K_torque": 4,
+                    "force_threshold": 0.0,
+                    "torque_threshold": 0.0,
+                    "task_frame": "tcp_frame",
+                    "FT_sensor_frame": "FT_sensor_frame",
+                    "tf_2_insframe": [
+                        0,
+                        0,
+                        0,
+                        0.0,
+                        0.5,
+                        0.0,
+                        0.8660254
+                    ]
+                }
+            }
+        },
+        {
+            "name": "PullDoor",
+            "task_specification": {
+                "from-force_control_task_lib-version-1.0.3": true,
+                "is-move_compliant_along_axis": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/move_compliant_along_axis.etasl.lua",
+                "parameters": {
+                    "axis": "z",
+                    "force": -20.0,
+                    "distance": 0.30,
+                    "contact_force": 0.0,
+                    "time_delay": 0.0,
+                    "max_time": 60.0,
+                    "maxvel": 0.08,
+                    "max_angular_velocity": 0.5,
+                    "K_F": [
+                        5000,
+                        5000,
+                        5000
+                    ],
+                    "K_T": [
+                        70,
+                        70,
+                        70
+                    ],
+                    "K_force": 4,
+                    "K_torque": 4,
+                    "force_threshold": 0.0,
+                    "torque_threshold": 0.0,
+                    "task_frame": "tcp_frame",
+                    "FT_sensor_frame": "FT_sensor_frame",
+                    "tf_2_insframe": [
+                        0,
+                        0,
+                        0,
+                        0.0,
+                        0.5,
+                        0.0,
+                        0.8660254
+                    ]
+                }
+            }
+        },
+        {
+            "name": "RetreatFromHandle",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_relative": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
+                "parameters": {
+                    "delta_pos": [
+                        0,
+                        0,
+                        -0.12
+                    ],
+                    "delta_euler": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "eq_r": 0.08,
+                    "maxacc": 0.2,
+                    "maxvel": 0.1,
+                    "task_frame": "tcp_frame",
+                    "wrt_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "SafePose",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_jointspace_trap": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
+                "parameters": {
+                    "maxacc": 0.3,
+                    "maxvel": 0.3,
+                    "target_joints": [
+                        0.0,
+                        -0.3,
+                        0.0,
+                        -1.6,
+                        0.0,
+                        1.4,
+                        0.8
+                    ],
+                    "units": "radians"
+                }
+            }
+        }
+    ]
+}

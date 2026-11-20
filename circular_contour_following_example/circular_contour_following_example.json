@@ -18,7 +18,7 @@
         {
             "name": "guarded_motion_down",
             "task_specification": {
-                "from-force_control_task_lib-version-1.0.2": true,
+                "from-force_control_task_lib-version-1.0.3": true,
                 "is-guarded_motion": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/guarded_motion.etasl.lua",
                 "parameters": {
@@ -62,7 +62,7 @@
         {
             "name": "guarded_motion_to_contour",
             "task_specification": {
-                "from-force_control_task_lib-version-1.0.2": true,
+                "from-force_control_task_lib-version-1.0.3": true,
                 "is-guarded_motion": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/guarded_motion.etasl.lua",
                 "parameters": {
@@ -87,7 +87,7 @@
         {
             "name": "contour_following",
             "task_specification": {
-                "from-force_control_task_lib-version-1.0.2": true,
+                "from-force_control_task_lib-version-1.0.3": true,
                 "is-2D_contour_following": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/2D_contour_following.etasl.lua",
                 "parameters": {
