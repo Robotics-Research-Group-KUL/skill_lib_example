@@ -1,0 +1,134 @@
+{
+    "$schema": "../../../../task_specifications/tasks-schema.json",
+    "tasks": [
+        {
+            "name": "MovingHome",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_jointspace_trap": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
+                "parameters": {
+                    "maxacc": 0.3,
+                    "maxvel": 0.3,
+                    "target_joints": [-1.57, -1.5708, 1.5708, -1.5708, -1.5708, 0.0],
+                    "units": "radians"
+                }
+            }
+        },
+        {
+            "name": "AbovePeg",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_absolute_pose": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_absolute_pose.etasl.lua",
+                "parameters": {
+                    "desired_pose": [0.40, -0.50, 0.32, 0.0, 1.0, 0.0, 0.0],
+                    "maxvel": 0.25,
+                    "maxacc": 0.5,
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.001,
+                    "error_rot_th": 0.01,
+                    "task_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "GraspPeg",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_absolute_pose": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_absolute_pose.etasl.lua",
+                "parameters": {
+                    "desired_pose": [0.40, -0.50, 0.22, 0.0, 1.0, 0.0, 0.0],
+                    "maxvel": 0.05,
+                    "maxacc": 0.2,
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.0005,
+                    "error_rot_th": 0.005,
+                    "task_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "LiftPeg",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_relative": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
+                "parameters": {
+                    "delta_pos": [0, 0, 0.10],
+                    "delta_euler": [0, 0, 0],
+                    "eq_r": 0.08,
+                    "maxacc": 0.2,
+                    "maxvel": 0.1,
+                    "task_frame": "tcp_frame",
+                    "wrt_frame": "world_frame"
+                }
+            }
+        },
+        {
+            "name": "Retreat",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_relative": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
+                "parameters": {
+                    "delta_pos": [0, 0, 0.10],
+                    "delta_euler": [0, 0, 0],
+                    "eq_r": 0.08,
+                    "maxacc": 0.2,
+                    "maxvel": 0.1,
+                    "task_frame": "tcp_frame",
+                    "wrt_frame": "world_frame"
+                }
+            }
+        },
+        {
+            "name": "MoveToPose",
+            "task_specification": {
+                "from-core_task_lib-version-1.0.1": true,
+                "is-move_cartesianspace_absolute_pose": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_absolute_pose.etasl.lua",
+                "parameters": {
+                    "desired_pose": [0.18, -0.62, 0.34, 0.0, 1.0, 0.0, 0.0],
+                    "maxvel": 0.1,
+                    "maxacc": 0.2,
+                    "eq_r": 0.08,
+                    "error_pos_th": 0.0005,
+                    "error_rot_th": 0.005,
+                    "task_frame": "tcp_frame"
+                }
+            }
+        },
+        {
+            "name": "InsertionAction",
+            "task_specification": {
+                "from-force_control_task_lib-version-1.0.2": true,
+                "is-insertion_action": true,
+                "file_path": "$[crospi_application_template]/task_specifications/libraries/force_control_task_lib/task_specifications/insertion_action.etasl.lua",
+                "parameters": {
+                    "task_frame": "tcp_frame",
+                    "feature_frame": [-0.015, -0.01, 0.07, 0.0, 0.0, 0.0, 1.0],
+                    "housing_orientation": [0.0, 1.0, 0.0, 0.0],
+                    "target_wrench": [0.0, 0.0, -5.0, 0.0, 0.0, 0.0],
+                    "force_controlled": [0, 0, 1, 0, 0, 0],
+                    "reduced_dof": "z",
+                    "monitor_fraction": 0.9,
+                    "time_delay": 0.3,
+                    "K_t": 2000,
+                    "K_r": 10,
+                    "K_force": 4,
+                    "maxvel": 0.02,
+                    "maxvel_rot": 0.1,
+                    "FT_sensor_frame": "FT_sensor_frame",
+                    "wrench_convention": "exerted_on_environment",
+                    "force_threshold": 0.2,
+                    "torque_threshold": 0.005,
+                    "tool_weight": 0.0,
+                    "tool_COG": [0.0, 0.0, 0.0],
+                    "wrench_input_channel": "wrench_input"
+                }
+            }
+        }
+    ]
+}

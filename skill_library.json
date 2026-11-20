@@ -13,7 +13,7 @@
         {
             "lib_name": "force_control_task_lib",
             "repo_url": "https://github.com/Robotics-Research-Group-KUL/force_control_task_lib.git",
-            "version": "1.0.1"
+            "version": "1.0.2"
         },
         {
             "lib_name": "debug_lib",
