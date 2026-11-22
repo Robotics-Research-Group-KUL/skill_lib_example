@@ -49,6 +49,10 @@ from betfsm import (
 )
 from betfsm_crospi import load_task_list, CrospiTask
 from betfsm_ros import BeTFSMNode, ROSRunner, ServiceClient
+# Breakpoint of the Crospi Playground: uncomment to pause the playground in a state, e.g.
+#   PlaygroundBreakpoint("check pose", message="Check the pose of the tool, then Resume")
+# (does nothing outside the playground)
+# from crospi_playground.betfsm_debug import PlaygroundBreakpoint
 from std_srvs.srv import Trigger
 
 class MyTree(Sequence):

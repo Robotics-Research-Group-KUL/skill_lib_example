@@ -31,6 +31,10 @@ from std_srvs.srv import Trigger
 
 from crospi_playground import playground_markers as mk
 from crospi_playground.betfsm_markers import MarkerEdit
+# Breakpoint of the Crospi Playground: uncomment to pause the playground in a state, e.g.
+#   PlaygroundBreakpoint("check pose", message="Check the pose of the tool, then Resume")
+# (does nothing outside the playground)
+# from crospi_playground.betfsm_debug import PlaygroundBreakpoint
 from fake_gripper_control import GripperClose, GripperOpen
 
 CUBE = [0.40, 0.0]        # cube on the table (robot base frame) [m] (AboveCube of the task list)

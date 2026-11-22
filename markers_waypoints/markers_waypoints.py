@@ -25,6 +25,10 @@ from betfsm_ros import BeTFSMNode, ROSRunner
 
 from crospi_playground import playground_markers as mk
 from crospi_playground.betfsm_markers import MarkerEdit, MarkerUpdater, WithMarkers
+# Breakpoint of the Crospi Playground: uncomment to pause the playground in a state, e.g.
+#   PlaygroundBreakpoint("check pose", message="Check the pose of the tool, then Resume")
+# (does nothing outside the playground)
+# from crospi_playground.betfsm_debug import PlaygroundBreakpoint
 
 HOME_TCP = [-0.174, 0.615, 0.391]  # tool position at the joints of MovingHome (robot base frame) [m]
 WAYPOINTS = [                # in the robot base frame [m]

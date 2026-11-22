@@ -77,6 +77,10 @@ from std_srvs.srv import Trigger
 
 from crospi_playground import playground_markers as mk
 from crospi_playground.betfsm_markers import MarkerEdit
+# Breakpoint of the Crospi Playground: uncomment to pause the playground in a state, e.g.
+#   PlaygroundBreakpoint("check pose", message="Check the pose of the tool, then Resume")
+# (does nothing outside the playground)
+# from crospi_playground.betfsm_debug import PlaygroundBreakpoint
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "pick_and_place"))
 from fake_gripper_control import GripperClose, GripperOpen  # noqa: E402
