@@ -4,7 +4,7 @@
         {
             "name": "MovingHome",
             "task_specification": {
-                "from-core_task_lib-version-1.0.1": true,
+                "from-core_task_lib-version-1.0.2": true,
                 "is-move_jointspace_trap": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_jointspace_trap.etasl.lua",
                 "parameters": {
@@ -18,7 +18,7 @@
         {
             "name": "MovingSpline",
             "task_specification":{
-                "from-core_task_lib-version-1.0.1": true,
+                "from-core_task_lib-version-1.0.2": true,
                 "is-follow_spline": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/follow_spline.etasl.lua",
                 "parameters": {
@@ -32,7 +32,7 @@
         {
             "name": "MovingDown",
             "task_specification": {
-                "from-core_task_lib-version-1.0.1": true,
+                "from-core_task_lib-version-1.0.2": true,
                 "is-move_cartesianspace_relative": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
                 "parameters": {
@@ -53,7 +53,7 @@
         {
             "name": "MovingUp",
             "task_specification": {
-                "from-core_task_lib-version-1.0.1": true,
+                "from-core_task_lib-version-1.0.2": true,
                 "is-move_cartesianspace_relative": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/move_cartesianspace_relative.etasl.lua",
                 "parameters": {
@@ -122,7 +122,7 @@
         {
             "name": "keep_frame",
             "task_specification":{
-                "from-core_task_lib-version-1.0.1": true,
+                "from-core_task_lib-version-1.0.2": true,
                 "is-keep_relative_initial_pose": true,
                 "file_path": "$[crospi_application_template]/task_specifications/libraries/core_task_lib/task_specifications/keep_relative_initial_pose.etasl.lua",
                 "parameters": {
