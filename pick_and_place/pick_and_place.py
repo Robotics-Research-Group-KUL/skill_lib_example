@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 #
-# Pick and place with the gripper of the robot (Franka Emika Panda: pick_and_place.json; Trossen WidowX AI:
-# pick_and_place.widowx_ai.json), environment pick_and_place/table_with_small_box.xml: the robot stands on a pedestal
+# Pick and place with the gripper of the robot (task list of the robot: Franka Emika Panda:
+# pick_and_place.json (the default); Trossen WidowX AI: pick_and_place_widowx_ai.json; UR10e with a parallel gripper:
+# pick_and_place_ur10e_gripper.json; given as an argument: python3 pick_and_place.py pick_and_place_widowx_ai.json),
+# environment pick_and_place/table_with_small_box.xml: the robot stands on a pedestal
 # next to the table and moves a cube (5 cm, 0.15 kg, a free body of the simulation) to another place of the table.
 #
 #   pick:  home pose, open the gripper, fast motion (move_cartesianspace_absolute_pose, AboveCube of the task list) until
@@ -112,7 +114,10 @@ def main(args=None):
     get_logger().info("pick_and_place started")
     mk.init(my_node)  # outside the playground: RViz markers published by this node
     blackboard = {}
-    json_name = os.path.splitext(os.path.basename(__file__))[0] + ".json"
+    # Task list: by default the .json file with the name of this script; another one (e.g. the task list of another
+    # robot) can be given as the first argument: python3 <this script> <task list: a file name or a complete path>
+    # It is taken out of sys.argv: the runner of BeTFSM parses the other arguments (its options, e.g. --serve).
+    json_name = sys.argv.pop(1) if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else os.path.splitext(os.path.basename(__file__))[0] + ".json"
     load_task_list(json_name, blackboard)
     runner = ROSRunner(my_node, PickAndPlace(), blackboard, frequency=100.0, publish_frequency=5.0, debug=False,
                        display_active=False)

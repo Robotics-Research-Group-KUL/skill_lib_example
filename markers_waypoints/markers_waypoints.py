@@ -143,7 +143,10 @@ def main(args=None):
     get_logger().info("markers_waypoints started")
     mk.init(my_node)  # outside the playground: RViz markers published by this node (does nothing in the playground)
     blackboard = {}
-    json_name = os.path.splitext(os.path.basename(__file__))[0] + ".json"
+    # Task list: by default the .json file with the name of this script; another one (e.g. the task list of another
+    # robot) can be given as the first argument: python3 <this script> <task list: a file name or a complete path>
+    # It is taken out of sys.argv: the runner of BeTFSM parses the other arguments (its options, e.g. --serve).
+    json_name = sys.argv.pop(1) if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else os.path.splitext(os.path.basename(__file__))[0] + ".json"
     load_task_list(json_name, blackboard)
     runner = ROSRunner(my_node, MarkersWaypoints(), blackboard, frequency=100.0, publish_frequency=5.0, debug=False,
                        display_active=False)

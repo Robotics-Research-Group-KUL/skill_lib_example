@@ -70,8 +70,10 @@ def main(args=None):
     get_logger().info("Contour following example started")
     blackboard = {}
 
-    # Derive the JSON filename from the Python file, assuming they are both located in the same directory and have the same base name.
-    json_name = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.path.splitext(os.path.basename(__file__))[0] + ".json")
+    # Task list: by default the .json file with the name of this script; another one (e.g. the task list of another
+    # robot) can be given as the first argument: python3 <this script> <task list: a file name or a complete path>
+    # It is taken out of sys.argv: the runner of BeTFSM parses the other arguments (its options, e.g. --serve).
+    json_name = sys.argv.pop(1) if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else os.path.join(os.path.dirname(os.path.abspath(__file__)), os.path.splitext(os.path.basename(__file__))[0] + ".json")
     load_task_list(json_name, blackboard)
 
     sm = MyTree()

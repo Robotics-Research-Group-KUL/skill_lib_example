@@ -63,9 +63,11 @@ def main(args=None):
     #Use the following to load the task list relative to a ROS2 package, e.g. crospi_application_template
     # load_task_list("$[crospi_application_template]/skill_specifications/libraries/skill_lib_example/skill_example_loop_fsm/skill_example_loop_fsm.json",blackboard)
     
-    # Derive the JSON filename from the Python file, assuming they are both located in the same directory and have the same base name.
-    json_name = os.path.splitext(os.path.basename(__file__))[0] + ".json"
-    load_task_list(json_name, blackboard)    
+    # Task list: by default the .json file with the name of this script; another one (e.g. the task list of another
+    # robot) can be given as the first argument: python3 <this script> <task list: a file name or a complete path>
+    # It is taken out of sys.argv: the runner of BeTFSM parses the other arguments (its options, e.g. --serve).
+    json_name = sys.argv.pop(1) if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else os.path.splitext(os.path.basename(__file__))[0] + ".json"
+    load_task_list(json_name, blackboard)
 
     sm = MyTree()
     runner = ROSRunner(my_node,sm,blackboard, frequency=100.0, publish_frequency=5.0, debug=False, display_active=False)
